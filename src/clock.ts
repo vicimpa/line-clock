@@ -27,7 +27,7 @@ observer.observe(document.body, { childList: true, subtree: true });
 
 type segment = ReturnType<typeof segment>;
 
-function segment(char = '', size = 32, duration = 300) {
+function segment(char = '', size = 32, duration = 300, delay = 0) {
   const node = document.createElement('canvas');
   const ctx = node.getContext('2d')!;
   var from = rotate(char), to = from, last = now();
@@ -82,6 +82,7 @@ function segment(char = '', size = 32, duration = 300) {
 
   render(to);
 
+
   return {
     get char() {
       return char;
@@ -90,7 +91,7 @@ function segment(char = '', size = 32, duration = 300) {
       if (v === char)
         return;
 
-      last = now();
+      last = now() + delay;
       from = current();
       to = rotate(char = v);
 
